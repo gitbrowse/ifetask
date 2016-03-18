@@ -1,0 +1,48 @@
+div{
+    margin: 0;
+    padding: 20px;
+    border:1px #999 solid;
+}
+body{
+}
+.container{
+    box-sizing: border-box;
+    width: 100%;
+    float: left;
+    background-color: #eee;
+}
+.left{
+    float: left;
+    background-color: #ffffff;
+    width: 158px;
+}
+.left .logo{
+    width: 80px;
+    height: 80px;
+    float: left;
+}
+.left-mane{
+    font-size: 14px;
+    font-weight: 900;
+    margin-left: 20px;
+}
+.center{
+    background-color: white;
+    margin-left: 220px;
+    margin-right: 140px;
+
+}
+.right{
+    box-sizing: border-box;
+    background-color: white;
+    float: right;
+    width: 120px;
+}
+.right .logo{
+    margin-bottom: 10px;
+    width: 80px;
+    height: 80px;
+}
+.text{
+    text-indent: 2em;
+}
