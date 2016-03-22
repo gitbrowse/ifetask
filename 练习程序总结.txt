@@ -1,0 +1,8 @@
+﻿全屏滚动项目
+1.background-size：center与background-size:100% 100%的区别，前者是图片比例不变，将图片短边拉伸至覆盖父控件（图片大在垂直方向是会溢出），后者是长宽分别拉伸至父控件大小
+2.background-position,图片的位置，500% 50%时会居中
+3.父元素margin-top为0，而子元素margin-top不为0时，父元素不被顶出margin-top，此时用float或overflow或绝对定位等消除折叠margin成立条件
+（！！！）4.图片位置对齐技巧：负margin
+5.排版出现诡异情况（如图文在垂直方向对不齐等），果断使用float或绝对定位（vertical-align会使情况更诡异）
+6.li的class放到ul上
+7.清除select等默认样式：-webkit-appearance: none
