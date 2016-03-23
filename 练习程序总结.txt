@@ -6,3 +6,29 @@
 5.排版出现诡异情况（如图文在垂直方向对不齐等），果断使用float或绝对定位（vertical-align会使情况更诡异）
 6.li的class放到ul上
 7.清除select等默认样式：-webkit-appearance: none
+8.添加子节点示例：
+	ul.innerHTML = ul.innerHTML + "<li>"+str+"</li>";
+	或者：
+	var li = document.createElement("li");
+	var node = document.createTextNode(str);
+	li.appendChild(node);
+	ul.appendChild(li);
+9.获取子节点
+	var li = document.querySelectorAll("#source li");
+	或
+	var source = document.getElementById("source");
+	var li = source.getElementsByTagName("li");
+（！！！）10.节点需要先加载后才能执行节点的函数；如button必须在加载后才能执行onclick函数，处理方法：
+	函数包含到onload中window.onload = function(){XXX};
+11.获取对象的属性名，for in
+12.删除自身节点:node.parentNode.removeChild(node);
+
+
+
+
+
+
+
+
+
+
