@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box{
+            float: left;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            margin: 10px 10px;
+        }
+    </style>
+    <script>
+        var dataSet = new Array();
+        function createNode(x){
+            var node = document.createElement("div");
+            node.setAttribute("class","box");
+            node.innerHTML = x;
+            return node;
+        }
+        function render(){
+            var queue = document.getElementById("queue");
+            queue.innerHTML = "";
+            for(var i=0;i<dataSet.length;i++){
+                var x = dataSet[i];
+                var node = createNode(x);
+                queue.appendChild(node);
+            }
+        }
+
+        function init(){
+            var leftOut = document.getElementById("left-out");
+            var leftIn = document.getElementById("left-in");
+            var rightIn = document.getElementById("right-in");
+            var rightOut = document.getElementById("right-out");
+            leftIn.onclick = function () {
+                var x = document.getElementById("input").value;
+                if(!isNaN(x)){
+                    dataSet.unshift(x);
+                    render();
+                }
+                else{
+                    alert("请输入数字！");
+                }
+            }
+            leftOut.onclick = function () {
+                dataSet.shift();
+                render();
+            }
+            rightIn.onclick = function () {
+                var x = document.getElementById("input").value;
+                dataSet.push(x);
+                render();
+            }
+            rightOut.onclick = function () {
+                dataSet.pop();
+                render();
+            }
+        }
+        window.onload = function () {
+            init();
+        }
+    </script>
+</head>
+<body>
+<input id="input" type="text"/>
+<input id="left-in" type="button" value="左侧入">
+<input id="right-in" type="button" value="右侧入">
+<input id="left-out" type="button" value="左侧出">
+<input id="right-out" type="button" value="右侧出">
+<div id="queue"></div>
+</body>
+</html>
