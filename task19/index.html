@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #box{
+            position: relative;
+            min-height: 500px;
+            width: 100%;
+        }
+        #aqi-chart-wrap{
+            /*display: inline;*/
+            position: absolute;
+            left: 100px;
+            bottom: 0;
+            display: inline-block;
+            vertical-align: bottom;
+            text-align: center;
+        }
+        .item{
+            border: 1px solid white;
+            background-color: red;
+            /*margin-right: -8px;*/
+            width: 20px;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+    </style>
+    <script>
+        var dataSet = new Array();
+        dataSet = [23,12,43,54,27,33,100,97,59,42];
+        function createNode(x){
+            var height = parseInt(x)*4+"px";
+            var item = document.createElement("div");
+            item.setAttribute("class","item");
+            item.style.height = height;
+            item.setAttribute("title",height);
+            return item;
+        }
+        function render(){
+            var queue = document.getElementById("aqi-chart-wrap");
+            queue.innerHTML = "";
+            for(var i=0;i<dataSet.length;i++){
+                var x = dataSet[i];
+                var node = createNode(x);
+                queue.appendChild(node);
+            }
+        }
+        function doSort(i,j){
+            var flag = 0;
+            var tmp = 0;
+            if(i<dataSet.length-1&&j<dataSet.length-1-i){
+                if(dataSet[j]>dataSet[j+1]){
+                    tmp = dataSet[j];
+                    dataSet[j] = dataSet[j+1];
+                    dataSet[j+1] = tmp;
+                    flag = 1;
+                }
+                setTimeout(function () {
+                    render();
+                    doSort(i,j+1);
+                },500*flag);
+            }
+            else if(j==dataSet.length-1-i){
+                doSort(i+1,0);
+            }
+            else if(i=dataSet.length-1){
+                alert("sorted!");
+            }
+        }
+        function init(){
+            render();
+            var leftOut = document.getElementById("left-out");
+            var leftIn = document.getElementById("left-in");
+            var rightIn = document.getElementById("right-in");
+            var rightOut = document.getElementById("right-out");
+            var sort = document.getElementById("sort");
+            leftIn.onclick = function () {
+                var x = document.getElementById("input").value;
+                if(!isNaN(x)&&x>=10&&x<=100){
+                    dataSet.unshift(x);
+                    render();
+                }
+                else{
+                    alert("请输入10-100中的数字！");
+                }
+            }
+            leftOut.onclick = function () {
+                var x = dataSet.shift();
+                if(x){
+                    alert(x);
+                    render();
+                }else{
+                    alert("请先在队列中插入元素");
+                }
+
+            }
+            rightIn.onclick = function () {
+                var x = document.getElementById("input").value;
+                if(!isNaN(x)&&x>=10&&x<=100){
+                    dataSet.push(x);
+                    render();
+                }
+                else{
+                    alert("请输入10-100中的数字！");
+                }
+            }
+            rightOut.onclick = function () {
+                var x = dataSet.pop();
+                if(x){
+                    alert(x);
+                    render();
+                }else{
+                    alert("请先在队列中插入元素");
+                }
+            }
+            sort.onclick = function () {
+                doSort(0,0);
+            };
+        }
+        window.onload = function () {
+            init();
+        }
+    </script>
+</head>
+<body>
+<input id="input" type="text"/>
+<input id="left-in" type="button" value="左侧入">
+<input id="right-in" type="button" value="右侧入">
+<input id="left-out" type="button" value="左侧出">
+<input id="right-out" type="button" value="右侧出">
+<input id="sort" type="button" value="排序">
+<div id="box">
+    <div id="aqi-chart-wrap"></div>
+</div>
+</body>
+</html>

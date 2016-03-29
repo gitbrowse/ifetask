@@ -5,17 +5,24 @@
     <title>IFE JavaScript Task 01</title>
     <script src="task.js"></script>
     <style>
-        .aqi-chart-wrap{
+        #box{
+            position: relative;
+            min-height: 500px;
+            width: 100%;
+        }
+        #aqi-chart-wrap{
             /*display: inline;*/
-            float: left;
-            padding: 0;
-            margin: 0;
-            word-spacing: 0;
-            letter-spacing: 0;
+            position: absolute;
+            left: 100px;
+            bottom: 0;
+            display: inline-block;
+            vertical-align: bottom;
+            text-align: center;
         }
         .item{
-            margin-right: -8px;
+            /*margin-right: -8px;*/
             display: inline-block;
+            vertical-align: bottom;
         }
     </style>
 </head>
@@ -30,14 +37,13 @@
 <fieldset>
     <legend>请选择查看的城市：</legend>
     <select id="city-select">
-        <option>北京</option>
-        <option>tianj</option>
+        <option value="北京">北京</option>
     </select>
 </fieldset>
 
-<div class="aqi-chart-wrap">
-    <div class="item" style="background-color: red;width: 200px;height: 100px"></div>
-    <div class="item" style="background-color: blue;width: 100px;height: 200px;"></div>
+<div id="box">
+    <div id="aqi-chart-wrap"></div>
 </div>
+
 </body>
 </html>

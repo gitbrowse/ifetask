@@ -17,10 +17,16 @@
     </style>
     <script>
         var dataSet = new Array();
-        function createNode(x){
+        function createNode(x,index){
             var node = document.createElement("div");
             node.setAttribute("class","box");
             node.innerHTML = x;
+            node.index = index;
+            node.onclick = function () {
+//                alert(this.index);
+                dataSet.splice(this.index,1);
+                render();
+            }
             return node;
         }
         function render(){
@@ -28,7 +34,7 @@
             queue.innerHTML = "";
             for(var i=0;i<dataSet.length;i++){
                 var x = dataSet[i];
-                var node = createNode(x);
+                var node = createNode(x,i);
                 queue.appendChild(node);
             }
         }
@@ -40,7 +46,7 @@
             var rightOut = document.getElementById("right-out");
             leftIn.onclick = function () {
                 var x = document.getElementById("input").value;
-                if(!isNaN(x)){
+                if(!isNaN(x)&&x){
                     dataSet.unshift(x);
                     render();
                 }
@@ -49,18 +55,35 @@
                 }
             }
             leftOut.onclick = function () {
-                dataSet.shift();
-                render();
+                var x = dataSet.shift();
+                if(x){
+                    alert(x);
+                    render();
+                }else{
+                    alert("请先在队列中插入元素");
+                }
+
             }
             rightIn.onclick = function () {
                 var x = document.getElementById("input").value;
-                dataSet.push(x);
-                render();
+                if(!isNaN(x)&&x){
+                    dataSet.push(x);
+                    render();
+                }
+                else{
+                    alert("请输入数字！");
+                }
             }
             rightOut.onclick = function () {
-                dataSet.pop();
-                render();
+                var x = dataSet.pop();
+                if(x){
+                    alert(x);
+                    render();
+                }else{
+                    alert("请先在队列中插入元素");
+                }
             }
+
         }
         window.onload = function () {
             init();

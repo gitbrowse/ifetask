@@ -42,6 +42,12 @@ var aqiSourceData = {
     "沈阳": randomBuildData(500)
 };
 
+var ruler = {
+    day : 10,
+    week : 20,
+    month : 30
+}
+
 // 用于渲染图表的数据
 var chartData = {};
 
@@ -51,13 +57,29 @@ var pageState = {
     nowGraTime: "day"
 }
 
+function getRandomColor(){
+    return '#'+('00000'+(Math.random()*0x1000000<<0).toString(16)).slice(-6);
+}
+
 /**
  * 渲染图表
  */
 function renderChart() {
-    chartData = aqiSourceData;
+
+    //chartData = aqiSourceData;
     var container = document.getElementById('aqi-chart-wrap');
-    var itemStr = "<div></div>"
+    container.innerHTML = "";
+    for(var i in chartData){
+        var height = chartData[i];
+        var item = document.createElement("div");
+        item.setAttribute("class","item");
+        item.style.backgroundColor = getRandomColor();
+        item.style.height = height;
+        item.style.width = ruler[pageState.nowGraTime];
+        item.setAttribute("title",height);
+        container.appendChild(item);
+    }
+
 }
 
 /**
@@ -69,7 +91,7 @@ function graTimeChange() {
         // 设置对应数据
         pageState.nowGraTime = this.value;
         // 调用图表渲染函数
-        renderChart();
+        initAqiChartData();
     }
 
 
@@ -84,7 +106,7 @@ function citySelectChange() {
         // 设置对应数据
         pageState.nowSelectCity = this.value;
         // 调用图表渲染函数
-        renderChart();
+        initAqiChartData();
     }
 
 }
@@ -107,6 +129,13 @@ function initGraTimeForm() {
 function initCitySelector() {
     // 读取aqiSourceData中的城市，然后设置id为city-select的下拉列表中的选项
     var select = document.getElementById("city-select");
+    select.innerHTML = "";
+    for(var name in aqiSourceData){
+        var option = document.createElement("option");
+        option.innerHTML = name;
+        option.value = name;
+        select.appendChild(option);
+    }
     var city = select.value;
     pageState.nowSelectCity = city;
     // 给select设置事件，当选项发生变化时调用函数citySelectChange
@@ -117,8 +146,54 @@ function initCitySelector() {
  * 初始化图表需要的数据格式
  */
 function initAqiChartData() {
+
     // 将原始的源数据处理成图表需要的数据格式
     // 处理好的数据存到 chartData 中
+    var time = pageState.nowGraTime;
+    var city = pageState.nowSelectCity;
+    for(var name in aqiSourceData){
+        if(name == city){
+            chartData = aqiSourceData[name];
+        }
+    }
+    if(time == "week"){
+        var weekData = {};
+        var i = 0;
+        var count = 0;
+        var sum = 0;
+        for(var name in chartData){
+            count++;
+            sum+=chartData[name];
+            if(count==7){
+                weekData[i] = Math.floor(sum/count);
+                count = 0;
+                sum = 0;
+                i++;
+            }
+        }
+        if(count !=0){
+            weekData[i] = Math.floor(sum/count);
+        }
+        chartData = weekData;
+    }
+    if(time == "month"){
+        var monthData = {};
+        var i = 0;
+        var count = 0;
+        var sum = 0;
+        for(var name in chartData){
+            count++;
+            sum+=chartData[name];
+            if(count==30){
+                monthData[i] = Math.floor(sum/count);
+                count = 0;
+                sum = 0;
+                i++;
+            }
+        }
+        chartData = monthData;
+    }
+    renderChart();
 
 }
 
@@ -129,8 +204,8 @@ function init() {
 
     initGraTimeForm();
     initCitySelector();
-    //initAqiChartData();
-    renderChart();
+    initAqiChartData();
+    //renderChart();
 
 
 }
