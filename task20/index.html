@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box{
+            float: left;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            margin: 10px 10px;
+        }
+    </style>
+    <script>
+        var reg = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
+        var dataSet = new Array();
+        function createNode(x,index){
+            var node = document.createElement("div");
+            node.setAttribute("class","box");
+            node.innerHTML = x;
+            node.index = index;
+            node.onclick = function () {
+//                alert(this.index);
+                dataSet.splice(this.index,1);
+                render();
+            }
+            return node;
+        }
+        function render(){
+            var queue = document.getElementById("queue");
+            queue.innerHTML = "";
+            for(var i=0;i<dataSet.length;i++){
+                var x = dataSet[i];
+                var node = createNode(x,i);
+                queue.appendChild(node);
+            }
+        }
+
+        function init(){
+            var leftOut = document.getElementById("left-out");
+            var leftIn = document.getElementById("left-in");
+            var rightIn = document.getElementById("right-in");
+            var rightOut = document.getElementById("right-out");
+            var submit = document.getElementById("submit");
+            leftIn.onclick = function () {
+                var str = "";
+                var x = document.getElementById("input").value;
+                for(var i=0;i< x.length;i++){
+                    if(reg.test(x[i])){
+                        str+=x[i];
+                    }
+                    else if(x[i] == ","||x[i] == " "||"，"||"、"){
+                        if(str!=""){
+                            dataSet.unshift(str);
+                            str = "";
+                        }
+                    }else{
+                        alert("请输入字母汉字或数字！");
+                        return false;
+                    }
+                }
+                if(str){
+                    dataSet.unshift(str);
+                    str = "";
+                }
+                render();
+            }
+            leftOut.onclick = function () {
+                var x = dataSet.shift();
+                if(x){
+                    alert(x);
+                    render();
+                }else{
+                    alert("请先在队列中插入元素");
+                }
+
+            }
+            rightIn.onclick = function () {
+                var str = "";
+                var x = document.getElementById("input").value;
+                for(var i=0;i< x.length;i++){
+                    if(reg.test(x[i])){
+                        str+=x[i];
+                    }
+                    else if(x[i] == ","||x[i] == " "||"，"||"、"){
+                        if(str!=""){
+                            dataSet.push(str);
+                            str = "";
+                        }
+                    }else{
+                        alert("请输入字母汉字或数字！");
+                        return false;
+                    }
+                }
+                if(str){
+                    dataSet.push(str);
+                    str = "";
+                }
+                render();
+            }
+            rightOut.onclick = function () {
+                var x = dataSet.pop();
+                if(x){
+                    alert(x);
+                    render();
+                }else{
+                    alert("请先在队列中插入元素");
+                }
+            }
+            submit.onclick = function () {
+                render();
+                var elementsIndex = new Array();
+                var x = document.getElementById("select").value;
+                var elements = document.getElementsByClassName("box");
+                for(var i=0;i<dataSet.length;i++){
+                    if(dataSet[i].indexOf(x)!=-1){
+                        elementsIndex.push(i);
+                    }
+                }
+                for(var i=0;i<elementsIndex.length;i++){
+                    elements[elementsIndex[i]].style.color = "blue";
+                }
+//                    console.log(elementsIndex);
+            }
+
+        }
+        window.onload = function () {
+            init();
+        }
+    </script>
+</head>
+<body>
+<!--<input id="input" type="text"/>-->
+<div style="display: inline-block">
+    <textarea style="display: inline-block;vertical-align: middle" id="input"></textarea>
+    <input id="left-in" type="button" value="左侧入">
+    <input id="right-in" type="button" value="右侧入">
+    <input id="left-out" type="button" value="左侧出">
+    <input id="right-out" type="button" value="右侧出">
+    <input id="select" type="text"/>
+    <input id="submit" type="button" value="查询">
+</div>
+
+<div id="queue"></div>
+</body>
+</html>
