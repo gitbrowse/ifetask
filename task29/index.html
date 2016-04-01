@@ -5,24 +5,28 @@
     <title></title>
     <style>
         #container{
-            display: inline-block;
-            padding: 100px 50px;
+            padding-top: 50px;
         }
-        #tag{
+        .row{
+            display: inline-block;
+            padding: 10px 50px;
+        }
+        .title{
             vertical-align: middle;
             font-size: 30px;
             font-weight: bold;
             font-family: 楷体;
         }
-        #text{
+        .content{
             vertical-align: middle;
             height: 60px;
-            width: 500px;
+            width: 1000px;
             border: 2px solid #ccc;
             border-radius: 8px;
             padding-left: 10px;
             font-size: 20px;
             outline:medium;
+            color: #ccc;
         }
         #validate{
             vertical-align: middle;
@@ -38,29 +42,65 @@
             font-size: 30px;
             outline: none;
         }
+        .msg{
+            display: none;
+            height: 80px;
+            padding-left: 100px;
+            line-height: 80px;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: 楷体;
+        }
     </style>
     <script>
         var reg = /[\u4e00-\u9fa5\（\）\《\》\——\；\，\。\“\”\‘\’\、\？\<\>]+$/;
         window.onload = function () {
+            //名称
+            var cNmae = document.getElementById("cName");
+            var mName = document.getElementById("mName");
             var validate = document.getElementById("validate");
+            mName.style.display = "block";
+            mName.innerHTML = "必填，长度为4-16个字符";
+            mName.style.color = "#ccc";
             validate.onclick = function () {
-                var text = document.getElementById("text").value;
+                var mName = document.getElementById("mName");
+                var cName = document.getElementById("cName");
+                var text = cName.value;
                 var count = text.length;
-                for(var i=0;i<text.length;i++){
-                    if(reg.test(text[i])){
+                for (var i = 0; i < text.length; i++) {
+                    if (reg.test(text[i])) {
                         count++;
                     }
                 }
-                alert(count);
+                if (count >= 4 && count <= 16) {
+                    mName.innerHTML = "名称可用";
+                    mName.style.color = "green";
+                    return 1;
+                } else {
+                    if (count == 0) {
+                        mName.innerHTML = "名称不可为空";
+                    }
+                    else {
+                        mName.innerHTML = "名称不可用,名称长度必须为4-16个字符";
+                    }
+                    mName.style.color = "red";
+                    return 0;
+                }
             }
         }
     </script>
 </head>
 <body>
 <div id="container">
-    <label id="tag">名称：</label>
-    <input id="text" type="text">
-    <button id="validate">验证</button>
+    <div class="row">
+        <label class="title" id="tName">名称：</label>
+        <input class="content" id="cName" type="text">
+        <label class="msg" id="mName"></label>
+    </div><br/>
+
+    <div class="row">
+        <button id="validate">验证</button>
+    </div>
 </div>
 </body>
 </html>

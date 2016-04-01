@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #container{
+            padding-top: 50px;
+        }
+        .row{
+            display: inline-block;
+            padding: 10px 50px;
+        }
+        .title{
+            vertical-align: middle;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: 楷体;
+        }
+        .content{
+            vertical-align: middle;
+            height: 60px;
+            width: 1000px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding-left: 10px;
+            font-size: 20px;
+            outline:medium;
+            color: #ccc;
+        }
+        #validate{
+            vertical-align: middle;
+            padding: 0;
+            margin: 0;
+            height: 60px;
+            width: 100px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2f79ba;
+            color: #ffffff;
+            font-family: 楷体;
+            font-size: 30px;
+            outline: none;
+        }
+        .msg{
+
+            display: none;
+            height: 80px;
+            padding-left: 100px;
+            line-height: 80px;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: 楷体;
+        }
+    </style>
+    <script>
+        var reg = /[\u4e00-\u9fa5\（\）\《\》\——\；\，\。\“\”\‘\’\、\？\<\>]+$/;
+        var reg2 = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var reg3 = /^((\(\d{2,3}\))|(\d{3}\-))?13\d{9}$/;
+        window.onload = function () {
+            //名称
+            var cNmae = document.getElementById("cName");
+            cNmae.onfocus = function () {
+                var mName = document.getElementById("mName");
+                mName.style.display = "block";
+                mName.innerHTML = "必填，长度为4-16个字符";
+                mName.style.color = "#ccc";
+            }
+            cNmae.onblur = function () {
+                var mName = document.getElementById("mName");
+                var text = this.value;
+                var count = text.length;
+                for(var i=0;i<text.length;i++){
+                    if(reg.test(text[i])){
+                        count++;
+                    }
+                }
+                if(count>=4&&count<=16){
+                    mName.innerHTML = "名称可用";
+                    mName.style.color = "green";
+                    return 1;
+                }else{
+                    if(count==0){
+                        mName.innerHTML = "名称不可为空";
+                    }
+                    else{
+                        mName.innerHTML = "名称不可用,名称长度必须为4-16个字符";
+                    }
+                    mName.style.color = "red";
+                    return 0;
+                }
+            }
+
+            //密码
+            var cPsd = document.getElementById("cPsd");
+            cPsd.onfocus = function () {
+                var mPsd = document.getElementById("mPsd");
+                mPsd.style.display = "block";
+                mPsd.innerHTML = "必填，长度为4-16个字符";
+                mPsd.style.color = "#ccc";
+            }
+            cPsd.onblur = function () {
+                var mPsd = document.getElementById("mPsd");
+                var text = this.value;
+                var count = text.length;
+                for(var i=0;i<text.length;i++){
+                    if(reg.test(text[i])){
+                        count++;
+                    }
+                }
+                if(count>=4&&count<=16){
+                    mPsd.innerHTML = "密码可用";
+                    mPsd.style.color = "green";
+                    return 1;
+                }else{
+                    if(count==0){
+                        mPsd.innerHTML = "密码不可为空";
+                    }
+                    else{
+                        mPsd.innerHTML = "密码不可用,名称长度必须为4-16个字符";
+                    }
+                    mPsd.style.color = "red";
+                    return 0;
+                }
+            }
+
+            //重复密码
+            var cRPsd = document.getElementById("cRPsd");
+            cRPsd.onfocus = function () {
+                var mRPsd = document.getElementById("mRPsd");
+                mRPsd.style.display = "block";
+                mRPsd.innerHTML = "必填，长度为4-16个字符";
+                mRPsd.style.color = "#ccc";
+            }
+            cRPsd.onblur = function () {
+                var mRPsd = document.getElementById("mRPsd");
+                var text = this.value;
+                var count = text.length;
+                for(var i=0;i<text.length;i++){
+                    if(reg.test(text[i])){
+                        count++;
+                    }
+                }
+                if(count>=4&&count<=16){
+                    var cPsd = document.getElementById("cPsd");
+                    var cRPsd = document.getElementById("cRPsd");
+                    if(cRPsd.value == cPsd.value){
+                        mRPsd.innerHTML = "密码输入一致";
+                        mRPsd.style.color = "green";
+                        return 1;
+                    }else{
+                        mRPsd.innerHTML = "密码输入不一致";
+                        mRPsd.style.color = "red";
+                    }
+                }else{
+                    if(count==0){
+                        mRPsd.innerHTML = "重复密码不可为空";
+                    }
+                    else{
+                        mRPsd.innerHTML = "重复密码不可用,名称长度必须为4-16个字符";
+                    }
+                    mRPsd.style.color = "red";
+                }
+                return 0;
+            }
+            //邮箱
+            var cEmail = document.getElementById("cEmail");
+            cEmail.onfocus = function () {
+                var mEmail = document.getElementById("mEmail");
+                mEmail.style.display = "block";
+                mEmail.innerHTML = "必填，正确的邮箱格式";
+                mEmail.style.color = "#ccc";
+            }
+            cEmail.onblur = function () {
+                var mEmail = document.getElementById("mEmail");
+                var text = this.value;
+                if(reg2.test(text)){
+                    mEmail.innerHTML = "邮箱格式正确";
+                    mEmail.style.color = "green";
+                    return 1;
+                }else{
+                    if(text.length==0){
+                        mEmail.innerHTML = "邮箱不可为空";
+                    }
+                    else{
+                        mEmail.innerHTML = "邮箱不可用,必须为正确的邮箱格式";
+                    }
+                    mEmail.style.color = "red";
+                    return 0;
+                }
+            }
+            //手机
+            var cPhone = document.getElementById("cPhone");
+            cPhone.onfocus = function () {
+                var mPhone = document.getElementById("mPhone");
+                mPhone.style.display = "block";
+                mPhone.innerHTML = "必填，正确的手机格式";
+                mPhone.style.color = "#ccc";
+            }
+            cPhone.onblur = function () {
+                var mPhone = document.getElementById("mPhone");
+                var text = this.value;
+                if(reg3.test(text)){
+                    mPhone.innerHTML = "手机格式正确";
+                    mPhone.style.color = "green";
+                    return 1;
+                }else{
+                    if(text.length==0){
+                        mPhone.innerHTML = "手机不可为空";
+                    }
+                    else{
+                        mPhone.innerHTML = "手机不可用,必须为正确的手机格式";
+                    }
+                    mPhone.style.color = "red";
+                    return 0;
+                }
+            }
+            var validate = document.getElementById("validate");
+            validate.onclick = function () {
+                cNmae.onfocus();
+                cPsd.onfocus();
+                cRPsd.onfocus();
+                cEmail.onfocus();
+                cPhone.onfocus();
+                if(cNmae.onblur()&cPsd.onblur()&cRPsd.onblur()&cEmail.onblur()&cPhone.onblur()){
+                    alert("提交成功");
+                }else{
+                    alert("输入有误");
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="container">
+    <div class="row">
+        <label class="title" id="tName">名称：</label>
+        <input class="content" id="cName" type="text">
+        <label class="msg" id="mName"></label>
+    </div><br/>
+
+    <div class="row">
+        <label class="title" id="tPsd">密码：</label>
+        <input class="content" id="cPsd" type="text">
+        <label class="msg" id="mPsd"></label>
+    </div><br/>
+
+    <div class="row">
+        <label class="title" id="tRPsd" style="margin-left: -60px">密码确认：</label>
+        <input class="content" id="cRPsd" type="text">
+        <label class="msg" id="mRPsd"></label>
+    </div><br/>
+
+    <div class="row">
+        <label class="title" id="tEmail">邮箱：</label>
+        <input class="content" id="cEmail" type="text">
+        <label class="msg" id="mEmail"></label>
+    </div><br/>
+
+    <div class="row">
+        <label class="title" id="tPhone">手机：</label>
+        <input class="content" id="cPhone" type="text">
+        <label class="msg" id="mPhone"></label>
+    </div><br/>
+
+    <div class="row">
+        <button id="validate">验证</button>
+    </div>
+</div>
+</body>
+</html>
