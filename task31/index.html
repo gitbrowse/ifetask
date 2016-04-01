@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    .container{
+
+        margin-top: 100px;
+    }
+    .row{
+        display: inline-block;
+        height: 100px;
+        line-height: 100px;
+
+    }
+    input[type=radio]{
+        vertical-align: middle;
+        margin-left: 200px;
+    }
+    input[type=text]{
+        vertical-align: middle;
+        margin-left: 20px;
+    }
+    span{
+        vertical-align: middle;
+    }
+    .tag{
+        margin-left: 200px;
+    }
+    select{
+        margin-right: 200px;
+    }
+    .student{
+        display: block;
+    }
+    .adult{
+        display: none;
+    }
+</style>
+<script>
+    var data = {
+        cityA:["A1","A2","A3","A4"],
+        cityB:["B1","B2","B3","B4","B5"],
+        cityC:["C1","C2","C3"],
+        cityD:["D1","D2","D3","D4"]
+    }
+    function initRadio(){
+        var student = document.getElementById("student");
+        var adult = document.getElementById("adult");
+        var studentRow = document.getElementsByClassName("student");
+        var adultRow = document.getElementsByClassName("adult");
+        student.onclick = function () {
+            adultRow[0].style.display = "none";
+            studentRow[0].style.display = "block";
+        }
+        adult.onclick = function () {
+            studentRow[0].style.display = "none";
+            adultRow[0].style.display = "block";
+        }
+    }
+    function initCity(){
+        var city = document.getElementById("city");
+        city.innerHTML = "";
+        var tmpl = "<option value='${city}'>${city}</option>";
+        for(var name in data){
+            var htmlTmpl = tmpl.replace("${city}",name).replace("${city}",name);
+            city.innerHTML += htmlTmpl;
+        }
+        getSchool(city.value);
+        city.onchange = function () {
+            getSchool(this.value);
+        }
+    }
+    function getSchool(cityName){
+        var array = data[cityName];
+        var school = document.getElementById("school");
+        school.innerHTML = "";
+        var tmpl = "<option value='${school}'>${school}</option>";
+        for(var i=0;i<array.length;i++){
+            var htmlTmpl = tmpl.replace("${school}",array[i]).replace("${school}",array[i]);
+            school.innerHTML += htmlTmpl;
+        }
+    }
+    window.onload = function () {
+        initCity();
+        initRadio();
+    }
+</script>
+<body>
+<div class="container">
+    <div class="row">
+        <input id="student" type="radio" name="is_student" value="在校生" checked><span>在校生</span>
+        <input id="adult" type="radio" name="is_student" value="非在校生"><span>非在校生</span>
+    </div><br/>
+    <div class="row student">
+        <label class="tag">学校</label>
+        <select id="city"></select>
+        <select id="school"></select>
+    </div>
+    <div class="row adult">
+        <label class="tag">就业单位</label>
+        <input type="text" >
+    </div>
+</div>
+</body>
+</html>

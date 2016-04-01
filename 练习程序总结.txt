@@ -38,6 +38,10 @@
 	文档全部加载完后才执行，并且只能同时存在一个
 	(2)$(document).ready(function(){}) 简写 $(function(){})
 	在dom绘制结束后就执行（不等待图片加载等）,可以存在多个
-
+21.json处理除了可以调用JSON对象，还可以用eval函数：
+	var obj = JSON.parse(jsonstr);
+	var str = JSON.stringfy(jsonobj);
+	或者：
+	var obj = eval('('+jsonstr+')');
 
 
