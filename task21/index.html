@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #input{
+            display: inline-block;
+            vertical-align: middle;
+            width: 400px;
+            height: 100px;
+            margin: 20px 0;
+        }
+        .box{
+            float: left;
+            /*width: 50px;*/
+            height: 50px;
+            background-color: #8ec6f5;
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            padding: 0 20px;
+            margin: 10px 10px;
+        }
+        .color{
+            background-color: #ff0700;
+        }
+    </style>
+    <script>
+        var reg = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/;
+        var dataSet = new Array();
+        var tagSet = new Array();
+        function createNode(x,index,array){
+            var node = document.createElement("div");
+            node.setAttribute("class","box");
+            node.innerHTML = x;
+            node.index = index;
+            node.onclick = function () {
+                array.splice(this.index,1);
+                render();
+                renderTag();
+            }
+            node.onmouseover = function () {
+                this.classList.add("color");
+                this.innerHTML = "点击删除"+this.innerHTML;
+            }
+            node.onmouseout = function(){
+                this.classList.remove("color");
+                var text = this.innerHTML.substr(0,4);
+                if(text == "点击删除"){
+                    this.innerHTML = this.innerHTML.substr(4);
+                }
+            }
+            return node;
+        }
+        function render(){
+            var queue = document.getElementById("queue");
+            queue.innerHTML = "";
+            for(var i=0;i<dataSet.length;i++){
+                var x = dataSet[i];
+                var node = createNode(x,i,dataSet);
+                node.style.backgroundColor = "#ffcd8b";
+                queue.appendChild(node);
+            }
+        }
+        function renderTag(){
+            var queue = document.getElementById("tag-queue");
+            queue.innerHTML = "";
+            for(var i=0;i<tagSet.length;i++){
+                var x = tagSet[i];
+                var node = createNode(x,i,tagSet);
+                queue.appendChild(node);
+            }
+        }
+        function isRepeat(str,array){
+            for(var i=0;i<array.length;i++){
+                if(array[i] == str){
+                    return true;
+                }
+            }
+            return false;
+        }
+        function addNode(str,array){
+            array.push(str);
+            if(array.length>10){
+                array.shift();
+            }
+        }
+        function addTag(value){
+            var tag = value.trim();
+            if(tag&&!isRepeat(tag,tagSet)){
+                addNode(tag,tagSet);
+            }
+            renderTag();
+//            alert(value);
+        }
+        function init(){
+
+            tag.onkeyup = function () {
+                var tag = document.getElementById("tag");
+                var value = tag.value;
+                event.preventDefault();
+                switch (event.keyCode){
+                    case 188:
+                    case 32: {
+                        addTag(value.substring(0,value.length-1));
+                        tag.value = "";
+                        break;
+                    }
+                    case 13: tag.value = "";addTag(value);
+                }
+//                alert(event.keyCode);
+            }
+            
+            
+            var rightIn = document.getElementById("right-in");
+            rightIn.onclick = function () {
+                var str = "";
+                var x = document.getElementById("input").value;
+                for(var i=0;i< x.length;i++){
+                    if(reg.test(x[i])){
+                        str+=x[i];
+                    }
+                    else if(x[i] == ","||" "||"，"||"、"){
+                        if(str!=""){
+                            if(!isRepeat(str,dataSet)){
+                                addNode(str,dataSet);
+                            }
+                            str = "";
+                        }
+                    }else{
+                        alert("请输入字母汉字或数字！");
+                        return false;
+                    }
+                }
+                if(str){
+                    if(!isRepeat(str,dataSet)){
+                        addNode(str,dataSet);
+                    }
+                    str = "";
+                }
+                render();
+            }
+        }
+        window.onload = function () {
+            init();
+        }
+    </script>
+</head>
+<body>
+<!--<input id="input" type="text"/>-->
+<div style="display: inline-block;clear: both">
+    <label>Tag:</label>
+    <input type="text" id="tag">
+</div>
+<div id="tag-queue"></div>
+<div style="clear: both">
+<div style="display: inline-block;clear: both">
+    <textarea id="input"></textarea><br/>
+    <!--<input id="left-in" type="button" value="左侧入">-->
+    <input id="right-in" type="button" value="确认兴趣爱好">
+    <!--<input id="left-out" type="button" value="左侧出">-->
+    <!--<input id="right-out" type="button" value="右侧出">-->
+    <!--<input id="select" type="text"/>-->
+    <!--<input id="submit" type="button" value="查询">-->
+</div>
+<div id="queue"></div>
+</body>
+</html>

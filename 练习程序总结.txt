@@ -30,7 +30,8 @@
 15.setTimeOut是在文档流结束后过xms执行，在循环中执行setTimeOut的两种方法。
 	（1）使用递归
 	（2）函数用字符拼接或者闭包的方法得到i，同时时间乘以系数i
-
+16.js在元素前端插入this.innerHtml = "xxxx"+this.innerHtml
+17.js动态操作class，classList
 
 
 
