@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #container{
+            display: inline-block;
+            padding: 100px 50px;
+        }
+        #tag{
+            vertical-align: middle;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: 楷体;
+        }
+        #text{
+            vertical-align: middle;
+            height: 60px;
+            width: 500px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding-left: 10px;
+            font-size: 20px;
+            outline:medium;
+        }
+        #validate{
+            vertical-align: middle;
+            padding: 0;
+            margin: 0;
+            height: 60px;
+            width: 100px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2f79ba;
+            color: #ffffff;
+            font-family: 楷体;
+            font-size: 30px;
+            outline: none;
+        }
+    </style>
+    <script>
+        var reg = /[\u4e00-\u9fa5\（\）\《\》\——\；\，\。\“\”\‘\’\、\？\<\>]+$/;
+        window.onload = function () {
+            var validate = document.getElementById("validate");
+            validate.onclick = function () {
+                var text = document.getElementById("text").value;
+                var count = text.length;
+                for(var i=0;i<text.length;i++){
+                    if(reg.test(text[i])){
+                        count++;
+                    }
+                }
+                alert(count);
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="container">
+    <label id="tag">名称：</label>
+    <input id="text" type="text">
+    <button id="validate">验证</button>
+</div>
+</body>
+</html>

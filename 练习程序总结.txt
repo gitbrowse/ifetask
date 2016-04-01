@@ -32,8 +32,12 @@
 	（2）函数用字符拼接或者闭包的方法得到i，同时时间乘以系数i
 16.js在元素前端插入this.innerHtml = "xxxx"+this.innerHtml
 17.js动态操作class，classList
-
-
+18.清除input默认样式，border：none；out-line:middle;
+19.input控件与文本错位问题，input标签vertical-align默认的是base-line，而不同控件和浏览器对base-line的理解不同，可修改vertical-align值以对齐。
+20. (1)window.onload = function(){}
+	文档全部加载完后才执行，并且只能同时存在一个
+	(2)$(document).ready(function(){}) 简写 $(function(){})
+	在dom绘制结束后就执行（不等待图片加载等）,可以存在多个
 
 
 
