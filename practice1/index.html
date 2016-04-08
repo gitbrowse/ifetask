@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+            context.beginPath();
+            context.moveTo(0,0);
+            context.lineTo(0,400);
+            context.lineTo(200,200);
+            context.lineTo(0,0);
+            context.fillStyle = "#5db6cf";
+            context.fill();
+            context.closePath();
+            context.beginPath();
+            context.moveTo(0,0);
+            context.lineTo(400,0);
+            context.lineTo(200,200);
+            context.lineTo(0,0);
+            context.fillStyle = "#caf161";
+            context.fill();
+            context.closePath();
+
+            context.beginPath();
+            context.moveTo(0,0);
+            context.lineTo(400,0);
+            context.lineTo(200,200);
+            context.lineTo(0,0);
+            context.fillStyle = "#caf161";
+            context.fill();
+            context.closePath();
+
+            context.beginPath();
+            context.moveTo(0,400);
+            context.lineTo(200,400);
+            context.lineTo(100,300);
+            context.lineTo(0,400);
+            context.fillStyle = "#fe9ccd";
+            context.fill();
+            context.closePath();
+
+            context.beginPath();
+            context.moveTo(100,300);
+            context.lineTo(200,400);
+            context.lineTo(300,300);
+            context.lineTo(200,200);
+            context.lineTo(0,400);
+            context.fillStyle = "#a699c3";
+            context.fill();
+            context.closePath();
+
+            context.beginPath();
+            context.moveTo(200,400);
+            context.lineTo(400,400);
+            context.lineTo(400,200);
+            context.lineTo(200,400);
+            context.fillStyle = "#fec420";
+            context.fill();
+            context.closePath();
+
+            context.beginPath();
+            context.moveTo(200,200);
+            context.lineTo(300,100);
+            context.lineTo(300,300);
+            context.lineTo(200,200);
+            context.fillStyle = "#fbe910";
+            context.fill();
+            context.closePath();
+
+            context.beginPath();
+            context.moveTo(300,100);
+            context.lineTo(300,300);
+            context.lineTo(400,200);
+            context.lineTo(400,0);
+            context.lineTo(300,100);
+            context.fillStyle = "#ff5061";
+            context.fill();
+            context.closePath();
+        }
+    </script>
+</head>
+<body>
+<canvas id="canvas" width="400" height="400" style="display: block;margin: 50px auto;border: 1px #ccc solid;"></canvas>
+</body>
+</html>

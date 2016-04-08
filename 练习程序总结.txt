@@ -43,5 +43,5 @@
 	var str = JSON.stringfy(jsonobj);
 	或者：
 	var obj = eval('('+jsonstr+')');
-
+22.布局困难时用flex布局，屏幕适配可用@media
 
